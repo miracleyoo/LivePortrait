@@ -37,6 +37,7 @@ class LivePortraitPipeline(object):
     def __init__(self, inference_cfg: InferenceConfig, crop_cfg: CropConfig):
         self.live_portrait_wrapper: LivePortraitWrapper = LivePortraitWrapper(inference_cfg=inference_cfg)
         self.cropper: Cropper = Cropper(crop_cfg=crop_cfg)
+        # print("!!!!!!!!!!!!!!!!!!!!!")
 
     def make_motion_template(self, I_lst, c_eyes_lst, c_lip_lst, **kwargs):
         n_frames = I_lst.shape[0]
