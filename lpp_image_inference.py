@@ -10,8 +10,7 @@ import subprocess
 from src.config.argument_config import ArgumentConfig
 from src.config.inference_config import InferenceConfig
 from src.config.crop_config import CropConfig
-from src.live_portrait_pipeline import LivePortraitPipeline
-# from src.lpp_image import LivePortraitPipeline
+from src.lpp_image import LivePortraitPipeline
 
 
 def partial_fields(target_class, kwargs):
@@ -59,7 +58,7 @@ def main():
     )
 
     # run
-    live_portrait_pipeline.execute(args)
+    live_portrait_pipeline.execute(args.source, args.driving)
 
 
 if __name__ == "__main__":

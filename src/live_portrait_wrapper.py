@@ -123,7 +123,7 @@ class LivePortraitWrapper(object):
         """ get the appearance feature of the image by F
         x: Bx3xHxW, normalized to 0~1
         """
-        print('Model F input shape:', x.shape)
+        # print('Model F input shape:', x.shape)
         with torch.no_grad(), self.inference_ctx():
             feature_3d = self.appearance_feature_extractor(x)
 
@@ -136,7 +136,7 @@ class LivePortraitWrapper(object):
         return: A dict contains keys: 'pitch', 'yaw', 'roll', 't', 'exp', 'scale', 'kp'
         """
         with torch.no_grad(), self.inference_ctx():
-            print('Model M input shape:', x.shape)
+            # print('Model M input shape:', x.shape)
             kp_info = self.motion_extractor(x)
 
             if self.inference_cfg.flag_use_half_precision:
@@ -222,7 +222,7 @@ class LivePortraitWrapper(object):
         feat_eye = concat_feat(kp_source, eye_close_ratio)
 
         with torch.no_grad():
-            print("Model S['eye'] input shape:", feat_eye.shape)
+            # print("Model S['eye'] input shape:", feat_eye.shape)
             delta = self.stitching_retargeting_module['eye'](feat_eye)
 
         return delta.reshape(-1, kp_source.shape[1], 3)
@@ -236,7 +236,7 @@ class LivePortraitWrapper(object):
         feat_lip = concat_feat(kp_source, lip_close_ratio)
 
         with torch.no_grad():
-            print("Model S['lip'] input shape:", feat_lip.shape)
+            # print("Model S['lip'] input shape:", feat_lip.shape)
             delta = self.stitching_retargeting_module['lip'](feat_lip)
 
         return delta.reshape(-1, kp_source.shape[1], 3)
@@ -250,7 +250,7 @@ class LivePortraitWrapper(object):
         feat_stiching = concat_feat(kp_source, kp_driving)
 
         with torch.no_grad():
-            print("Model S['stitching'] input shape:", feat_stiching.shape)
+            # print("Model S['stitching'] input shape:", feat_stiching.shape)
             delta = self.stitching_retargeting_module['stitching'](feat_stiching)
 
         return delta
@@ -290,10 +290,10 @@ class LivePortraitWrapper(object):
                 # Mark the beginning of a new CUDA Graph step
                 torch.compiler.cudagraph_mark_step_begin()
             # get decoder input
-            print('Model W input shape:', feature_3d.shape, kp_source.shape, kp_driving.shape)
+            # print('Model W input shape:', feature_3d.shape, kp_source.shape, kp_driving.shape)
             ret_dct = self.warping_module(feature_3d, kp_source=kp_source, kp_driving=kp_driving)
             # decode
-            print('Model G input shape:', ret_dct['out'].shape)
+            # print('Model G input shape:', ret_dct['out'].shape)
             ret_dct['out'] = self.spade_generator(feature=ret_dct['out'])
 
             # float the dict
