@@ -80,6 +80,9 @@ def main():
         's': torch.rand(1, 126)
     }
 
+    # face image output shape: (512, 512, 3)
+    # full image (s9) output shape: (1280, 720, 3)
+
     # Perform the FLOP analysis
     flops_total = 0
     param_total = 0

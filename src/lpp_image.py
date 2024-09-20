@@ -265,6 +265,9 @@ class LivePortraitPipeline(object):
             I_p_pstbk = paste_back(I_p_i, crop_info['M_c2o'], source_rgb_lst[0], mask_ori_float)
 
         print('execution time cost: ', time()-tic, 's')
+        print(f'face image output shape: {I_p_i.shape}')
+        print(f'full image output shape: {I_p_pstbk.shape}')
+
         return I_p_pstbk
 
         # mkdir(output_dir)
