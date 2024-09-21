@@ -206,7 +206,7 @@ class LivePortraitPipeline(object):
 
             c_s_eyes_lst, c_s_lip_lst = self.live_portrait_wrapper.calc_ratio(source_lmk_crop_lst)
             # save the motion template
-            I_s_lst = self.live_portrait_wrapper.prepare_videos(img_crop_256x256_lst)
+            I_s_lst = self.live_portrait_wrapper.prepare_videos(img_crop_256x256_lst) # Tx1x3xHxW
             source_template_dct = self.make_motion_template(I_s_lst, c_s_eyes_lst, c_s_lip_lst, output_fps=source_fps)
 
             key_r = 'R' if 'R' in driving_template_dct['motion'][0].keys() else 'R_d'  # compatible with previous keys
