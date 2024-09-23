@@ -14,18 +14,23 @@ source_images = [osp.join(source_root, f) for f in os.listdir(source_root) if f.
 # print(source_images)
 
 # Loop through all possible combinations of the two arguments
-for d in driving_videos[1:]:
-    stem = osp.splitext(osp.split(d)[1])[0]
-    out_dir = osp.join(out_root, stem)
+for d in driving_videos[1:2]:
+    d_stem = osp.splitext(osp.split(d)[1])[0]
+    out_dir = osp.join(out_root, f'{d_stem}-driving')
     driving_template_path = d.replace('.mp4', '.pkl')
-    if osp.exists(driving_template_path):
-        driving_content = driving_template_path
-    else:
-        driving_content = d
     os.makedirs(out_dir, exist_ok=True)
     for s in source_images:
+        driving_content = driving_template_path if osp.exists(driving_template_path) else d
+        s_stem = osp.splitext(osp.split(s)[1])[0]
+
+        # Check whether the corresponding file pair is processed already
+        out_path = osp.join(out_dir, f'{s_stem}--{d_stem}.mp4')
+        if osp.exists(out_path):
+            print(f"{out_path} is already processed! Continue to the next...")
+            continue
+
         # Construct the command to execute func.py with the current arguments
-        command = f"CUDA_VISIBLE_DEVICES=1 python {script_name} -d {driving_content} -s {s} -o {out_dir}"
+        command = f"CUDA_VISIBLE_DEVICES=2 python {script_name} -d {driving_content} -s {s} -o {out_dir}"
         print("Now running command: ", command)
         # Execute the command
         os.system(command)
