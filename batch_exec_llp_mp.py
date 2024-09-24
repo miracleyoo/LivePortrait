@@ -3,14 +3,22 @@ import math
 import os.path as osp
 from multiprocessing import Pool
 
-driving_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/processed_videos'
+driving_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/processed_videos']
 # source_root = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/source_images'
-source_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09202024'
+
+source_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09202024',
+                '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09232024',
+                '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09242024']
+
 script_name = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/inference.py'
 out_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results'
 
-driving_videos = [osp.join(driving_root, f) for f in os.listdir(driving_root) if f.endswith('.mp4')]
-source_images = [osp.join(source_root, f) for f in os.listdir(source_root) if f.endswith('.jpg') or f.endswith('.png')]
+driving_videos = []
+source_images = []
+for driving_root in driving_roots:
+    driving_videos.extend([osp.join(driving_root, f) for f in os.listdir(driving_root) if f.endswith('.mp4')])
+for source_root in source_roots:
+    source_images.extend([osp.join(source_root, f) for f in os.listdir(source_root) if f.endswith('.jpg') or f.endswith('.png')])
 
 def exec_program(args):
     cuda_idx, pairs = args
