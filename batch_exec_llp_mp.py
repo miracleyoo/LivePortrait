@@ -32,7 +32,7 @@ def exec_program(args):
 input_pairs = []
 
 # Loop through all possible combinations of the two arguments
-for d in driving_videos[3:]:
+for d in driving_videos:#[3:]:
     # print(d)
     d_stem = osp.splitext(osp.split(d)[1])[0]
     out_dir = osp.join(out_root, f'{d_stem}-driving')
