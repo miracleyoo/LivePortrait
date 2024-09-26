@@ -3,15 +3,20 @@ import math
 import os.path as osp
 from multiprocessing import Pool
 
-driving_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/processed_videos']
-# source_root = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/source_images'
+# driving_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/processed_videos']
+# # source_root = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/source_images'
 
-source_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09202024',
-                '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09232024',
-                '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09242024']
+# source_roots = ['/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09202024',
+#                 '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09232024',
+#                 '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/source_images/09242024']
+# out_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results'
+
+driving_roots = ['/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/driving_videos']
+source_roots = ['/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09202024',
+                '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09232024']
 
 script_name = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/inference.py'
-out_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results'
+out_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_videos'
 
 driving_videos = []
 source_images = []
@@ -51,7 +56,7 @@ for d in driving_videos:#[3:]:
         input_pairs.append((driving_content, s, out_dir))
         # Construct the command to execute func.py with the current arguments
 
-cuda_available_idxes = [1,3,4,5,6,7] #[2,3,4,5,6,7]
+cuda_available_idxes = [0,1,2,3,4,5,6,7] #[2,3,4,5,6,7]
 input_pairs_split = {i:[] for i in cuda_available_idxes}
 thread_num = len(cuda_available_idxes)
 pairs_num = len(input_pairs)

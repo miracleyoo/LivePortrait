@@ -454,15 +454,17 @@ class LivePortraitPipeline(object):
         wfp_concat = None
         ######### build the final concatenation result #########
         # driving frame | source frame | generation
-        if flag_is_source_video and flag_is_driving_video:
-            frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, img_crop_256x256_lst, I_p_lst)
-        elif flag_is_source_video and not flag_is_driving_video:
-            if flag_load_from_template:
-                frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, img_crop_256x256_lst, I_p_lst)
-            else:
-                frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst*n_frames, img_crop_256x256_lst, I_p_lst)
-        else:
-            frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, [img_crop_256x256], I_p_lst)
+        # if flag_is_source_video and flag_is_driving_video:
+        #     frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, img_crop_256x256_lst, I_p_lst)
+        # elif flag_is_source_video and not flag_is_driving_video:
+        #     if flag_load_from_template:
+        #         frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, img_crop_256x256_lst, I_p_lst)
+        #     else:
+        #         frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst*n_frames, img_crop_256x256_lst, I_p_lst)
+        # else:
+        #     frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, [img_crop_256x256], I_p_lst)
+
+        frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, [img_crop_256x256], I_p_lst)
 
         if flag_is_driving_video or (flag_is_source_video and not flag_is_driving_video):
             flag_source_has_audio = flag_is_source_video and has_audio_stream(args.source)
