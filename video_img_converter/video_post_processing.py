@@ -15,10 +15,10 @@ def video_to_images(args):
     """
     input_video_path, split_image_root, ver = args
 
-    print("Now processing: ", video_path, " Version:", ver)
+    print("Now processing: ", input_video_path, " Version:", ver)
     # input_video_path = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results/atalie-driving/aanbunat--atalie.mp4'
     # split_image_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/augmented_images'
-    ver = 1
+    # ver = 1
 
     os.makedirs(split_image_root, exist_ok=True)
 

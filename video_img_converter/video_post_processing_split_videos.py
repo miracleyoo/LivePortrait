@@ -52,8 +52,12 @@ def video_to_images(input_video_path,
         frame_count += 1
     return frame_count
 
-augmented_video_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results'
-split_image_root='/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/augmented_images'
+# augmented_video_root = '/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/llp_results'
+# split_image_root='/prj/qct/mmrd-cv/wonderland_data/3DFR_Data/3dMD/PAC/live-portrait-data/augmented_images'
+
+augmented_video_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_videos'
+split_image_root='/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_images'
+
 driver = ['ning'] #'atalie',
 driving_video_ver=1
 
@@ -66,13 +70,13 @@ for d in driver:
     split_num = len(augmented_video_subroots)
 
     subroot = augmented_video_subroots[0]
-    source_names = [p.split('--')[0] for p in os.listdir(subroot) if p.endswith('.mp4') and '_concat' not in p]
+    source_names = [p.split('--')[0] for p in os.listdir(subroot) if p.endswith('.mp4') and '_concat' in p]
 
     for sn in source_names:
         total_frames = 0
         for idx in range(split_num):
             augmented_video_subroot = augmented_video_subroots[idx]
-            file_name = f'{sn}--{d}_{idx+1}.mp4'
+            file_name = f'{sn}--{d}_{idx+1}_concat.mp4'
             video_path = osp.join(augmented_video_subroot, file_name)
             print("Now processing: ", video_path)
             print("-----------------------------------------------")
