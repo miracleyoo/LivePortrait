@@ -25,6 +25,9 @@ for driving_root in driving_roots:
 for source_root in source_roots:
     source_images.extend([osp.join(source_root, f) for f in os.listdir(source_root) if f.endswith('.jpg') or f.endswith('.png')])
 
+#! Select only ning-related videos!!
+driving_videos = [d for d in driving_videos if 'ning' in d]
+
 def exec_program(args):
     cuda_idx, pairs = args
     for pair in pairs:

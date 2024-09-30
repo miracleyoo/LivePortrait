@@ -66,6 +66,8 @@ for d in driver:
     augmented_video_subroots = [p for p in os.listdir(augmented_video_root) if p.startswith(d+"_")]
     # sort the augmented_video_subroots by the number in the name
     augmented_video_subroots.sort(key=lambda x: int(x.lstrip(d+"_").rstrip('-driving')))
+    print(augmented_video_subroots)
+    # break
     augmented_video_subroots = [osp.join(augmented_video_root, p) for p in augmented_video_subroots]
     split_num = len(augmented_video_subroots)
 
