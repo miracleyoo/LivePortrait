@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 
 # Load a video into a numpy array
-def load_video(video_path):
+def load_video(video_path, resize=False):
     cap = cv2.VideoCapture(video_path)
     frames = []
     while True:
@@ -14,6 +14,8 @@ def load_video(video_path):
         ret, frame = cap.read()
         if not ret:
             break
+        if resize:
+            frame = center_crop_and_resize_image(frame, rt=512)
         frames.append(frame)
     cap.release()
     return np.array(frames)
@@ -57,6 +59,33 @@ def center_crop_and_resize_video(video, rt=512):
     cropped_video = resized_video[:,start_y:start_y+rt, start_x:start_x+rt]
     return cropped_video
 
+
+# Resize the short side of the image to 512 pixels, and do center crop for the long side, the output size is 512x512
+def center_crop_and_resize_image(image, rt=512):
+    """
+    Args:
+        video: numpy array, shape (T, H, W, C)
+        rt: int, the short side of the output video (resize to)
+    Returns:
+        cropped_video: numpy array, shape (T, 512, 512, C)
+    """
+    height, width, _ = image.shape
+    if height > width:
+        new_width = rt
+        new_height = int(height * rt / width)
+    else:
+        new_height = rt
+        new_width = int(width * rt / height)
+    # Resize the video
+    resized_image = cv2.resize(image, (new_width, new_height))
+    # Crop the center of the video
+    height, width, _ = resized_image.shape
+    start_x = (width - rt) // 2
+    start_y = (height - rt) // 2
+    # print(height, width, start_x, start_y)
+    cropped_image = resized_image[start_y:start_y+rt, start_x:start_x+rt]
+    return cropped_image
+
 if __name__ == '__main__':
     driving_video_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/driving_videos'
     # concat_video_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_videos/keli-driving'
@@ -64,6 +93,10 @@ if __name__ == '__main__':
     out_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/verify_videos'
 
     driving_video_paths = glob.glob(os.path.join(driving_video_root, '*.mp4'))
+
+    # Exclude ning and subjects videos
+    driving_video_paths = [p for p in driving_video_paths if 'ning' not in p and 'subject' not in p]
+
     drivers = [osp.splitext(osp.split(p)[1])[0] for p in driving_video_paths]
     driver_to_path = {dn: path for dn, path in zip(drivers, driving_video_paths)}
 
@@ -72,13 +105,13 @@ if __name__ == '__main__':
 
     for dn in drivers:
         print(f"Now processing driver: {dn}")
-        driving_video = load_video(driver_to_path[dn])
+        driving_video = load_video(driver_to_path[dn], resize=True)
         for sn in source_names:
             print(f"Now processing source: {sn}")
             concat_video_path = osp.join(concat_video_root, f'{dn}-driving',f'{sn}--{dn}_concat.mp4')
-            concat_video = load_video(concat_video_path)
-            cropped_driving_video = center_crop_and_resize_video(driving_video)
-            combination = np.concatenate([cropped_driving_video, concat_video], axis=2)
+            concat_video = load_video(concat_video_path, resize=False)
+            # cropped_driving_video = center_crop_and_resize_video(driving_video)
+            combination = np.concatenate([driving_video, concat_video], axis=2)
             # print(cropped_driving_video.shape, combination.shape)
             out_path = osp.join(out_root, f'{dn}-driving', f'{sn}--{dn}_concat.mp4')
             os.makedirs(osp.dirname(out_path), exist_ok=True)
