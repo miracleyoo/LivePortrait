@@ -13,7 +13,8 @@ from multiprocessing import Pool
 
 driving_roots = ['/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/driving_videos']
 source_roots = ['/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09202024',
-                '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09232024']
+                '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09232024',
+                '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09242024']
 
 script_name = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/inference.py'
 out_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_videos'
