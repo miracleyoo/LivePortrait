@@ -9,8 +9,8 @@ def load_video(video_path):
     cap = cv2.VideoCapture(video_path)
     frames = []
     while True:
-        if len(frames) == 100:
-            break
+        # if len(frames) == 100:
+        #     break
         ret, frame = cap.read()
         if not ret:
             break
@@ -53,7 +53,7 @@ def center_crop_and_resize_video(video, rt=512):
     _, height, width, _ = resized_video.shape
     start_x = (width - rt) // 2
     start_y = (height - rt) // 2
-    print(height, width, start_x, start_y)
+    # print(height, width, start_x, start_y)
     cropped_video = resized_video[:,start_y:start_y+rt, start_x:start_x+rt]
     return cropped_video
 
@@ -71,13 +71,15 @@ if __name__ == '__main__':
     print(drivers, source_names)
 
     for dn in drivers:
+        print(f"Now processing driver: {dn}")
         driving_video = load_video(driver_to_path[dn])
         for sn in source_names:
+            print(f"Now processing source: {sn}")
             concat_video_path = osp.join(concat_video_root, f'{dn}-driving',f'{sn}--{dn}_concat.mp4')
             concat_video = load_video(concat_video_path)
             cropped_driving_video = center_crop_and_resize_video(driving_video)
             combination = np.concatenate([cropped_driving_video, concat_video], axis=2)
-            print(cropped_driving_video.shape, combination.shape)
+            # print(cropped_driving_video.shape, combination.shape)
             out_path = osp.join(out_root, f'{dn}-driving', f'{sn}--{dn}_concat.mp4')
             os.makedirs(osp.dirname(out_path), exist_ok=True)
             write_video(combination, out_path, fps=30)
