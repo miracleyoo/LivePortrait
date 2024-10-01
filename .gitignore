@@ -14,9 +14,6 @@ pretrained_weights/docs
 pretrained_weights/liveportrait
 pretrained_weights/liveportrait_animals
 
-# Ipython notebook
-*.ipynb
-
 # Temporary files or benchmark resources
 animations/*
 tmp/*
