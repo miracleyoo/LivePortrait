@@ -465,7 +465,7 @@ class LivePortraitPipeline(object):
         #     frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, [img_crop_256x256], I_p_lst)
 
         # frames_concatenated = concat_frames(driving_rgb_crop_256x256_lst, [img_crop_256x256], I_p_lst)
-        frames_concatenated = concat_frames([img_crop_256x256], I_p_lst)
+        frames_concatenated = concat_frames(None, [img_crop_256x256], I_p_lst)
 
         if flag_is_driving_video or (flag_is_source_video and not flag_is_driving_video):
             flag_source_has_audio = flag_is_source_video and has_audio_stream(args.source)
