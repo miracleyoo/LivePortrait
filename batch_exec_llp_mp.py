@@ -16,7 +16,8 @@ source_roots = ['/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentati
                 '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09232024',
                 '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/source_images/09242024']
 
-script_name = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/inference.py'
+# script_name = '/local/mnt2/workspace2/zhongyan/projects/LivePortrait/inference.py'
+script_name = '/local/mnt3/workspace3/zhongyan/projects/LivePortrait/inference.py'
 out_root = '/prj/qct/mmrd-cv/esper/Misc0002/dataset/liveportrait-augmentation/augmented_videos'
 
 driving_videos = []
@@ -60,7 +61,7 @@ for d in driving_videos:#[3:]:
         input_pairs.append((driving_content, s, out_dir))
         # Construct the command to execute func.py with the current arguments
 
-cuda_available_idxes = [0,1,2,3,4,5,6,7] #[2,3,4,5,6,7]
+cuda_available_idxes = [0,1,2,3,6,7] #[2,3,4,5,6,7]
 input_pairs_split = {i:[] for i in cuda_available_idxes}
 thread_num = len(cuda_available_idxes)
 pairs_num = len(input_pairs)
